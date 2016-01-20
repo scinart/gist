@@ -1,0 +1,39 @@
+#!/bin/bash
+
+DIR="$(cd -P "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))" && pwd)"
+. ${DIR}/utils.sh
+
+USAGE='
+Example:
+
+$ ./main "1 1 1" "2 2 2"
+Hello world!
+Argument #0 is 1 1 1
+Argument #1 is 2 2 2
+
+$ ./main calc 1+1
+2
+
+$ ./main -h calc
+function calc()
+{
+    echo "$@"|bc
+}
+
+'
+
+function calc()
+{
+    echo "$@"|bc
+}
+
+function main()
+{
+    echo "Hello world!"
+    local i=0;
+    for v in "$@"; do
+        echo "Argument #$((i++)) is ${v}"
+    done
+}
+
+__main "$@"
