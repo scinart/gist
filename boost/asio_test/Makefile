@@ -3,20 +3,20 @@
 ifeq (, $(shell which lsb_release))
     $(warning lsb_release not found)
 else
-    OS=$(shell lsb_release -si)
-    ARCH=$(shell uname -m | sed 's/x86_//;s/i[3-6]86/32/')
-    VER=$(shell lsb_release -sr)
+    OS:=$(shell lsb_release -si)
+    ARCH:=$(shell uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+    VER:=$(shell lsb_release -sr)
 endif
 
 # OS:   Ubuntu RedHatEnterpriseServer CentOS
 # ARCH: 64     64                     64
 # VER:  15.04  6.5                    6.7
 
-CPPFLAGS = -g -Wall
+CPPFLAGS := -g -Wall
 CPPFLAGS += -std=c++11 
 # CPPFLAGS += -static
 
-LDFLAGS = -pthread -lrt
+LDFLAGS := -pthread -lrt
 
 ################################################################
 ## Boost related variables
@@ -56,11 +56,11 @@ endif
 ## Main Part
 
 LIB += $(wildcard ./lib/*.a) ## local lib
-SRC = $(wildcard *.cpp)      ## all cpp files
-target = asio                ## all targets
+SRC := $(wildcard *.cpp)      ## all cpp files
+target := $(shell basename $(CURDIR))             ## target
 
-base = $(filter-out $(target:%=%.cpp), $(SRC))  ## all file except targets
-CXX = g++
+base := $(filter-out $(target:%=%.cpp), $(SRC))  ## all file except targets
+CXX := g++
 
 .PHONY: all clean
 

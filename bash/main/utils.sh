@@ -11,11 +11,14 @@ function fail()
     return 1;
 }
 
-function usage()
+
+function __usage()
 {
     if [[ $# -eq 0 ]]; then
-    	echo "Usage: ${USAGE}"
-	declare -f main
+	[[ ! -z $USAGE ]] && echo "Usage: ${USAGE}" || (
+	    echo "Available functions:"
+	    compgen -A function |grep -ve "^__"
+	)
     else
 	declare -f $1;
     fi
@@ -26,7 +29,7 @@ function __main()
     if [[ $# -eq 0 ]]; then
 	main
     elif [[ $1 = "-h" ]]; then
-	usage "${@:2}"
+	__usage "${@:2}"
     else
     	"$1" "${@:2}"
     fi
