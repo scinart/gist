@@ -11,6 +11,10 @@ function fail()
     return 1;
 }
 
+function __program_exists()
+{
+    command -v "$1" >/dev/null 2>&1
+}
 
 function __usage()
 {
